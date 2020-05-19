@@ -1,0 +1,15 @@
+name: grcov action
+description: Run grcov
+inputs:
+  options:
+    description: grcov options. --output-file option is override by action
+    required: false
+    default: -t lcov --llvm --branch --ignore-not-existing --ignore "/*" ./target/debug/
+outputs:
+  report:
+    description: code coverage path
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+  - ${{ inputs.options }}
