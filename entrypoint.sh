@@ -1,14 +1,16 @@
 #!/bin/sh -l
 
-set -e
+set -xe
 
 trap "echo Signal received; exit" INT TERM
 
-CURDIR=$(cd $(dirname $0); pwd)
-REPORT="${CURDIR}/target/lcov.info"
+REPORT_FILE="lcov.info"
+
+report_path="${HOME}/${REPORT_FILE}"
+runner_report_path="${RUNNER_TEMP}/_github_home/${REPORT_FILE}"
 
 options="$1"
-options="$options -o $REPORT"
+options="$options -o $report_path"
 
 grcov $options
-echo "::set-output name=report::${REPORT}"
+echo "::set-output name=report::${runner_report_path}"
